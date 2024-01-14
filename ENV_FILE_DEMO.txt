@@ -1,0 +1,5 @@
+steps to create your own .env file
+
+1. touch .env
+2. open .env file
+3. add "KITE_TOKEN=YOUR_KITE_TOKEN"
