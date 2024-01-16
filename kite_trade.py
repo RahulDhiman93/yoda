@@ -80,7 +80,7 @@ class KiteApp:
         Exchange = []
         for i in data[1:-1]:
             row = i.split(",")
-            if exchange is None or exchange == row[11]:
+            if exchange is None or exchange == row[11] and row[3][1: -1] != '':
                 Exchange.append({'instrument_token': int(row[0]), 'exchange_token': row[1], 'tradingsymbol': row[2],
                                  'name': row[3][1:-1], 'last_price': float(row[4]),
                                  'expiry': dateutil.parser.parse(row[5]).date() if row[5] != "" else None,

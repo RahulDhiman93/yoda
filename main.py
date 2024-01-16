@@ -1,36 +1,37 @@
 from kite_trade import *
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+
 from datetime import datetime
 
 kite = KiteApp()
 
 import datetime
 
-instrument_token = 738561
-from_datetime = datetime.datetime.now() - datetime.timedelta(days=60)  # From last & days
+instrument_token = 5195009
+from_datetime = datetime.datetime.now() - datetime.timedelta(days=200)
 to_datetime = datetime.datetime.now()
-interval = "60minute"
+interval = "30minute"
 # print()
 data = kite.historical_data(instrument_token, from_datetime, to_datetime, interval, continuous=False, oi=False)
+print(data)
 
-
-def plotgraph(data):
+def plot_candlestick(data):
     dates = [entry['date'] for entry in data]
     opens = [entry['open'] for entry in data]
     highs = [entry['high'] for entry in data]
     lows = [entry['low'] for entry in data]
     closes = [entry['close'] for entry in data]
 
-    plt.plot(dates, opens, label='Open')
-    plt.plot(dates, highs, label='High')
-    plt.plot(dates, lows, label='Low')
-    plt.plot(dates, closes, label='Close')
+    fig = go.Figure(data=[go.Candlestick(x=dates,
+                                         open=opens,
+                                         high=highs,
+                                         low=lows,
+                                         close=closes,
+                                         increasing_line_color='green',
+                                         decreasing_line_color='red')])
 
-    plt.xlabel('Date and Time')
-    plt.ylabel('Stock Price')
-    plt.title('Stock Price Data')
-    plt.legend()
-    plt.show()
+    fig.update_layout(xaxis_rangeslider_visible=False, title='Stock Price Data')
+    fig.show()
 
-
-plotgraph(data)
+# Assuming data is a list of dictionaries with keys 'date', 'open', 'high', 'low', 'close'
+plot_candlestick(data)
